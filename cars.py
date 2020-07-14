@@ -39,23 +39,29 @@ available_car_colors = (
 )
 
 
-car_dict = {}
+# car_dict = {}
 
-for make in makes:
-  car_dict[make[1]] = {}
-  for model in models:
-    if make[0] == model[2]:
-      car_dict[make[1]][model[1]] = []
-      for color in available_car_colors:
-        if model[0] == color[0]:
-          car_dict[make[1]][model[1]].append(colors[color[1]-1][1])
+# for make in makes:
+#   car_dict[make[1]] = {}
+#   for model in models:
+#     if make[0] == model[2]:
+#       car_dict[make[1]][model[1]] = []
+#       for color in available_car_colors:
+#         if model[0] == color[0]:
+#           # print(f"model: {model} color: {color[0]}")
+#           car_dict[make[1]][model[1]].append(colors[color[1]-1][1])
 
-for car, makes in car_dict.items():
-  print(f"--------\n\n{car}\n\n--------\n")
-  for make, model in makes.items():
-    color_string = ""
-    for color in model:
-      color_string = color_string + ', ' + color
-    color_string = color_string.replace(", ", "", 1)
-    print(f"{make} is available in {color_string}")
-    # print(model)
+new_car_dict = {}
+new_car_dict = {make[1]: {model[1]: [colors[color[1]-1][1] for color in available_car_colors if model[0] == color[0] ] for model in models if make[0] == model[2]} for (make) in makes}
+print("".join(list({f"\n--------\n\n{car}\n\n--------\n" + "".join(f"\n{make} is available in" + "".join(f" {color}" for color in model) for (make, model) in makes.items()) for (car, makes) in new_car_dict.items()})))
+# print(new_car_dict)
+
+# for car, makes in new_car_dict.items():
+#   print(f"--------\n\n{car}\n\n--------\n")
+#   for make, model in makes.items():
+#     color_string = ""
+#     for color in model:
+#       color_string = color_string + ', ' + color
+#     color_string = color_string.replace(", ", "", 1)
+#     print(f"{make} is available in {color_string}")
+
